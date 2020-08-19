@@ -9,6 +9,10 @@ int SIZE = 2;
 
 int* extendMemory(int *Arr)
 {
+    /*
+     * This Function is Used to Increase the Size of the Array
+     * Arr : Array to be Resized 
+     */
     SIZE *= 2;
     Arr = (int*)realloc(Arr,SIZE);
     printf("The Array is Resized to %d\n",SIZE);
@@ -17,6 +21,10 @@ int* extendMemory(int *Arr)
 
 int errorHandler(int Type)
 {
+    /*
+     * This Function is Used to Print the Type Of Error Occurred
+     * Type : It Specifies the Number Which denotes the Error
+     */
     if(Type == 1)
         return 1;
     switch(Type)
@@ -36,10 +44,18 @@ int errorHandler(int Type)
 
 int moveElementsForward(int *Arr, int Length, int Data, int Index)
 {
+    /*
+     * This Function is Used to Shift the Elements Forward
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Data : Data to be Inserted after Shifting is Done
+     * Index : It Denotes the Index After Which the Elements to be Shifted
+     */
     // If the Previously Allocated Memory is Finished then again allocate New Memory
     if(Length >= SIZE)
         Arr = extendMemory(Arr);
-    // If There is No Memory realloc() will return a NULL Pointer If we Received that Our Memory got Full
+    // If There is No Memory realloc() will return a NULL Pointer If we Received that Our Memory 
+    // has no Free Space in it
     if(Arr == NULL)
         return 0;
     while(Length>Index)
@@ -53,6 +69,12 @@ int moveElementsForward(int *Arr, int Length, int Data, int Index)
 
 void moveElementsBackward(int *Arr, int Length, int Index)
 {
+    /*
+     * This Function is Used to Shift the Elements Backwards
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Index : It Denotes the Index After Which the Elements to be Shifted
+     */
     while(Index < Length-1)
     {
         Arr[Index] = Arr[Index+1];
@@ -63,6 +85,12 @@ void moveElementsBackward(int *Arr, int Length, int Index)
 
 int insertAtBegin(int *Arr, int Length, int Data)
 {
+    /*
+     * This Function is Used to Insert the Element At Beginning Of an Array
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Data : Data that Needs to be Inserted
+     */
     if(Length == 0)
     {
         Arr[0] = Data;
@@ -73,6 +101,13 @@ int insertAtBegin(int *Arr, int Length, int Data)
 
 int insertBeforeElement(int *Arr, int Length, int Element, int Data)
 {
+    /*
+     * This Function is Used to Insert the Element Before an Element in the Array
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Element : It Denotes the Element already Present in the Array
+     * Data : Data that Needs to be Inserted
+     */
     int i = 0;
     // Traverse The Array Until the Given Element is Found
     while(Arr[i]!=Element && i<Length)
@@ -86,6 +121,13 @@ int insertBeforeElement(int *Arr, int Length, int Element, int Data)
 
 int insertAfterElement(int *Arr, int Length, int Element, int Data)
 {
+    /*
+     * This Function is Used to Insert the Element After an Element in the Array
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Element : It Denotes the Element already Present in the Array
+     * Data : Data that Needs to be Inserted
+     */
     int i = 0;
     while(Arr[i]!=Element && i<Length)
         i += 1;
@@ -97,6 +139,12 @@ int insertAfterElement(int *Arr, int Length, int Element, int Data)
 
 int insertAtTail(int *Arr, int Length, int Data)
 {
+    /*
+     * This Function is Used to Insert the Data at End of the Array
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Data : Data that Needs to be Inserted
+     */
     if(Length == SIZE)
         Arr = extendMemory(Arr);
     if(Arr == NULL)
@@ -107,6 +155,11 @@ int insertAtTail(int *Arr, int Length, int Data)
 
 int printList(int *Arr, int Length)
 {
+    /*
+     * This Function is Used to Print the Elements in the Array
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     */
     if(Length == 0)
         return 2;
     int i = 0;
@@ -120,6 +173,11 @@ int printList(int *Arr, int Length)
 
 int deleteAtBegin(int *Arr, int Length)
 {
+    /*
+     * This Function is Used to Delete the Element
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     */
     if(Length == 0)
         return 2;
     moveElementsBackward(Arr, Length,0);
@@ -128,6 +186,12 @@ int deleteAtBegin(int *Arr, int Length)
 
 int deleteBeforeElement(int *Arr, int Length, int Element)
 {
+    /*
+     * This Function is Used to Delete the Element before an Element
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Element : It Denotes the Element already Present in the Array
+     */
     int i =0;
     while(Arr[i]!=Element && i<Length)
         i += 1;
@@ -139,6 +203,12 @@ int deleteBeforeElement(int *Arr, int Length, int Element)
 
 int deleteAfterElement(int *Arr, int Length, int Element)
 {
+    /*
+     * This Function is Used to Delete the Element After an Element
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     * Element : It Denotes the Element already Present in the Array
+     */
     int i =0;
     while(Arr[i]!=Element && i<Length)
         i += 1;
@@ -150,6 +220,11 @@ int deleteAfterElement(int *Arr, int Length, int Element)
 
 int deleteAtTail(int *Arr, int Length)
 {
+    /*
+     * This Function is Used to Delete the Element Present in the End
+     * Arr : It Denotes the Array
+     * Length : It Denotes the Number of Elements in the Array
+     */
     if(Length == 0)
         return 2;
     Arr[Length-1]=0;
