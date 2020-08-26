@@ -8,27 +8,37 @@ struct Node
     struct Node *Next;
 };
 
-struct Node* createNode(int Data)
+struct Node* createNode(struct Node *Head,int Data)
 {
     struct Node *New=(struct Node*)malloc(sizeof(struct Node));
-    New->Prev=New->Next=NULL;
+    New->Prev=NULL;
+    New->Next=Head;
     New->Data=Data;
     return New;
 }
 
 struct Node* insertNodeAtBegin(struct Node *Head, int Data)
 {
-    struct Node *New = createNode(Data);
+    struct Node *New = createNode(Head, Data);
     if(Head == NULL)
+    {
+        New->Next = New;
+        New->Prev = New;
         return New;
+    }
+    struct Node *Ptr = Head;
+    while(Ptr->Next != Head)
+        Ptr=Ptr->Next;
     New->Next = Head;
+    New->Prev = Ptr;
+    Ptr->Next = New;
     Head->Prev = New;
     return New;
 }
 
 struct Node* insertNodeBeforeNode(struct Node *Head, int NodeVal, int Data)
 {
-    struct Node *New = createNode(Data);
+    struct Node *New = createNode(Head, Data);
     struct Node *Ptr = Head;
     while(Ptr->Data!=NodeVal)
         Ptr=Ptr->Next;
@@ -40,7 +50,7 @@ struct Node* insertNodeBeforeNode(struct Node *Head, int NodeVal, int Data)
 
 struct Node* insertNodeAfterNode(struct Node *Head, int NodeVal, int Data)
 {
-    struct Node *New = createNode(Data);
+    struct Node *New = createNode(Head, Data);
     struct Node *Ptr = Head;
     while(Ptr->Data!=NodeVal)
         Ptr=Ptr->Next;
@@ -52,9 +62,9 @@ struct Node* insertNodeAfterNode(struct Node *Head, int NodeVal, int Data)
 
 struct Node* insertNodeAtTail(struct Node *Head, int Data)
 {
-    struct Node *New = createNode(Data);
+    struct Node *New = createNode(Head, Data);
     struct Node *Ptr = Head;
-    while(Ptr->Next!=NULL)
+    while(Ptr->Next!=Head)
         Ptr=Ptr->Next;
     New->Prev = Ptr;
     Ptr->Next = New;
@@ -63,20 +73,24 @@ struct Node* insertNodeAtTail(struct Node *Head, int Data)
 void printList(struct Node  *Head)
 {
     struct Node *Ptr = Head;
-    while(Ptr!=NULL)
+    do
     {
         printf("The Data is %d\n",Ptr->Data);
         Ptr=Ptr->Next;
-    }
+    }while(Ptr!=Head);
 }
 
 struct Node* deleteNodeAtBegin(struct Node *Head)
 {
     if(Head == NULL)
         return Head;
+    struct Node *Ptr = Head;
+    while(Ptr->Next != Head)
+        Ptr=Ptr->Next;
     Head = Head->Next;
+    Ptr->Next = Head;
     free(Head->Prev);
-    Head->Prev = NULL;
+    Head->Prev = Ptr;
     return Head;
 }
 
@@ -103,21 +117,25 @@ void deleteNodeAfterNode(struct Node *Head,int NodeVal)
 void deleteNodeAtTail(struct Node *Head)
 {
     struct Node *Ptr = Head;
-    while(Ptr->Next->Next != NULL)
+    while(Ptr->Next->Next != Head)
         Ptr = Ptr->Next;
     free(Ptr->Next);
-    Ptr->Next = NULL;
+    Ptr->Next = Head;
 }
 
 void deleteList(struct Node *Head)
 {
+    if(Head == NULL)
+        return;
     struct Node *Ptr = Head;
-    while(Ptr!=NULL)
+    struct Node *Temp;
+    do
     {
-        Head=Ptr;
+        Temp=Ptr;
         Ptr=Ptr->Next;
-        free(Head);
-    }
+        free(Temp);
+    }while(Ptr!=Head);
+    printf("Memory Freed Successfully....\n");
 }
 
 int main()
@@ -131,20 +149,20 @@ int main()
     int Data,NodeVal;
     do
     {
-        printf("+----------------------------------------------------------+\n");
-        printf("| A Program to Implement Doubly Linked List Data Structure |\n");
-        printf("+----------------------------------------------------------+\n");
-        printf("| 1.Insert a New Node at Beginning                         |\n");
-        printf("| 2.Insert a New Node Before a given Node                  |\n");
-        printf("| 3.Insert a New Node After a given Node                   |\n");
-        printf("| 4.Insert a New Node at the Tail                          |\n");
-        printf("| 5.Print the Doubly Linked List                           |\n");
-        printf("| 6.Delete a Node at Beginning                             |\n");
-        printf("| 7.Delete a Node Before a given Node                      |\n");
-        printf("| 8.Delete a Node After a given Node                       |\n");
-        printf("| 9.Delete a Node at the Tail                              |\n");
-        printf("| 10.Exit the Program                                      |\n");
-        printf("+----------------------------------------------------------+\n");
+        printf("+-------------------------------------------------------------------+\n");
+        printf("| A Program to Implement Circular Doubly Linked List Data Structure |\n");
+        printf("+-------------------------------------------------------------------+\n");
+        printf("| 1.Insert a New Node at Beginning                                  |\n");
+        printf("| 2.Insert a New Node Before a given Node                           |\n");
+        printf("| 3.Insert a New Node After a given Node                            |\n");
+        printf("| 4.Insert a New Node at the Tail                                   |\n");
+        printf("| 5.Print the Doubly Linked List                                    |\n");
+        printf("| 6.Delete a Node at Beginning                                      |\n");
+        printf("| 7.Delete a Node Before a given Node                               |\n");
+        printf("| 8.Delete a Node After a given Node                                |\n");
+        printf("| 9.Delete a Node at the Tail                                       |\n");
+        printf("| 10.Exit the Program                                               |\n");
+        printf("+-------------------------------------------------------------------+\n");
         printf("Enter Your Choice:");
         scanf("%d",&Choice);
         switch(Choice)
