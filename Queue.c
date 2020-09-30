@@ -16,7 +16,7 @@ struct Node *createNode(int Data)
     return New;
 }
 
-void enqueue(int Data)
+void insert(int Data)
 {
     struct Node *New = createNode(Data);
     if(Front == NULL)
@@ -38,7 +38,7 @@ void print()
     }
 }
 
-int dequeue()
+int delete()
 {
     if(Front == NULL)
         return -1;
@@ -82,7 +82,7 @@ int main()
             {
                 printf("Enter the Element Data:");
                 scanf("%d",&Data);
-                enqueue(Data);
+                insert(Data);
                 break;
             }
             case 2:
@@ -92,7 +92,7 @@ int main()
             }
             case 3:
             {
-                printf("The Data is %d\n",dequeue());
+                printf("The Data is %d\n",delete());
                 break;
             }
             case 4:
